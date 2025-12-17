@@ -1,66 +1,87 @@
 import {useEffect, useState} from "react";
-import axiosClient from "../axios-client.js";
+import axiosClient from "../axios-client";
 import {Link} from "react-router-dom";
-import {useStateContext} from "../context/ContextProvider.jsx";
+import {useStateContext} from "../context/ContextProvider";
 
 export default function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [pagination, setPagination] = useState({
+        current_page: 1,
+        last_page: 1,
+    });
+
     const {setNotification} = useStateContext();
 
     useEffect(() => {
-        getUsers();
+        getUsers(pagination.current_page);
     }, []);
 
-    const onDeleteClick = (user) => {
-        if (!window.confirm("Are you sure you want to delete this user?")) {
-            return;
-        }
-        axiosClient.delete(`/users/${user.id}`).then(() => {
-            setNotification("User was successfully deleted");
-            getUsers();
-        });
-    };
-
-    const getUsers = () => {
+    const getUsers = (page = 1) => {
         setLoading(true);
         axiosClient
-            .get("/users")
+            .get(`/users?page=${page}`)
             .then(({data}) => {
+                setUsers(data.data || []);
+                setPagination(data.meta);
                 setLoading(false);
-                if (Array.isArray(data.data)) {
-                    setUsers(data.data);
-                } else {
-                    setUsers([]);
-                }
             })
             .catch(() => {
-                setLoading(false);
                 setUsers([]);
+                setLoading(false);
             });
     };
 
+    const onDeleteClick = (user) => {
+        if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+        axiosClient.delete(`/users/${user.id}`).then(() => {
+            setNotification("User was successfully deleted");
+            getUsers(pagination.current_page);
+        });
+    };
+
+    const renderPageNumbers = () => {
+        const pages = [];
+
+        for (let i = 1; i <= pagination.last_page; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    onClick={() => getUsers(i)}
+                    className={`tw-px-3 tw-py-1 tw-border tw-rounded
+          ${pagination.current_page === i
+                        ? "tw-bg-indigo-400 tw-text-white"
+                        : "hover:tw-bg-gray-100"}
+        `}
+                >
+                    {i}
+                </button>
+            );
+        }
+
+        return pages;
+    };
+
+
     return (
         <div>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}
-            >
+            <div className="tw-flex tw-justify-between tw-items-center">
                 <h1 className="tw-text-lg">Users</h1>
-                <button className="btn btn-sm tw-bg-green-400 hover:tw-bg-green-300 tw-px-3 tw-py-1 tw-rounded-full tw-shadow-sm">
-                    <Link to="/users/new">
-                        <i className="fa-solid fa-circle-plus tw-mr-1"></i>
-                        <span>Create new user</span>
-                    </Link>
-                </button>
+                <Link
+                    to="/users/new"
+                    className="tw-bg-indigo-400 tw-text-white hover:tw-bg-indigo-300 tw-px-3 tw-py-1 tw-rounded-full tw-shadow-sm"
+                >
+                    <i className="fa-solid fa-circle-plus tw-mr-1"></i>
+                    Create new user
+                </Link>
             </div>
+
+            {/* Table */}
             <div className="card animated fadeInDown">
-                <table>
+                <table className="tw-w-full tw-border-collapse">
                     <thead>
-                    <tr>
+                    <tr className="tw-border-b">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -68,47 +89,67 @@ export default function Users() {
                         <th>Actions</th>
                     </tr>
                     </thead>
+
+                    <tbody>
                     {loading && (
-                        <tbody>
                         <tr>
-                            <td colSpan="5" className="text-center">
+                            <td colSpan="5" className="tw-text-center">
                                 Loading...
                             </td>
                         </tr>
-                        </tbody>
                     )}
-                    {!loading && Array.isArray(users) && (
-                        <tbody>
-                        {users.map((u) => (
-                            <tr key={u.id}>
+
+                    {!loading && users.length === 0 && (
+                        <tr>
+                            <td colSpan="5" className="tw-text-center">
+                                No users found
+                            </td>
+                        </tr>
+                    )}
+
+                    {!loading &&
+                        users.map((u) => (
+                            <tr key={u.id} className="tw-border-b">
                                 <td>{u.id}</td>
                                 <td>{u.name}</td>
                                 <td>{u.email}</td>
                                 <td>{u.created_at}</td>
-                                <td>
-                                    <Link className="btn-edit" to={"/users/" + u.id}>
-                                        <i className="fa-regular fa-pen-to-square tw-text-lg tw-text-orange-400"></i>
+                                <td className="tw-space-x-2">
+                                    <Link to={`/users/${u.id}`}>
+                                        <i className="fa-regular fa-pen-to-square tw-text-orange-400"></i>
                                     </Link>
-                                    <button
-                                        onClick={() => onDeleteClick(u)}
-                                    >
-                                        <i className="fa-regular fa-trash-can tw-text-lg tw-text-red-400"></i>
+                                    <button onClick={() => onDeleteClick(u)}>
+                                        <i className="fa-regular fa-trash-can tw-text-red-400"></i>
                                     </button>
                                 </td>
                             </tr>
                         ))}
-                        </tbody>
-                    )}
-                    {!loading && !Array.isArray(users) && (
-                        <tbody>
-                        <tr>
-                            <td colSpan="5" className="text-center">
-                                No users found.
-                            </td>
-                        </tr>
-                        </tbody>
-                    )}
+                    </tbody>
                 </table>
+
+                <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-mt-4">
+                    {/* Prev */}
+                    <button
+                        disabled={pagination.current_page === 1}
+                        onClick={() => getUsers(pagination.current_page - 1)}
+                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
+                    >
+                        <i className="fa-solid fa-angle-left"></i>
+                    </button>
+
+                    {/* Page Numbers */}
+                    {renderPageNumbers()}
+
+                    {/* Next */}
+                    <button
+                        disabled={pagination.current_page === pagination.last_page}
+                        onClick={() => getUsers(pagination.current_page + 1)}
+                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
+                    >
+                        <i className="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
     );

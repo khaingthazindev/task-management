@@ -55,18 +55,18 @@ export default function DefaultLayout() {
                     </button>
                 </div>
 
-                <nav className="tw-flex-1 tw-flex tw-flex-col tw-gap-4">
+                <nav className="tw-flex-1 tw-flex tw-flex-col tw-gap-1">
                     <Link
                         to="/dashboard"
                         className="tw-py-2 tw-px-4 tw-rounded hover:tw-bg-gray-200 tw-transition"
                     >
-                        {sidebarOpen ? "Dashboard" : "🏠"}
+                        {sidebarOpen ? "Dashboard" : <span className="tw-text-xl">🏠</span>}
                     </Link>
                     <Link
                         to="/users"
                         className="tw-py-2 tw-px-4 tw-rounded hover:tw-bg-gray-200 tw-transition"
                     >
-                        {sidebarOpen ? "Users" : "👥"}
+                        {sidebarOpen ? "Users" : <span className="tw-text-xl">👥</span>}
                     </Link>
                 </nav>
             </aside>

@@ -10,9 +10,6 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return UserResource::collection(
@@ -20,30 +17,19 @@ class UserController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']); // Corrected 'pasword' to 'password'
+        $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-        return response()->json(new UserResource($user), 201); // Use response()->json()
+        return response()->json(new UserResource($user), 201);
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
@@ -53,9 +39,6 @@ class UserController extends Controller
         $user->update($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
         $user->delete();
