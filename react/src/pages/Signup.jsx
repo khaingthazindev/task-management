@@ -92,7 +92,7 @@ export default function Signup() {
                     </button>
 
                     <p className="tw-text-center tw-text-sm tw-text-slate-500">
-                        Already registered?
+                        Already registered?{" "}
                         <Link to="/login" className="tw-font-medium tw-text-indigo-400 hover:tw-underline">Sign in</Link>
                     </p>
                 </form>
