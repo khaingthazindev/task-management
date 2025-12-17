@@ -66,7 +66,7 @@ export default function Login() {
                             className="tw-w-full tw-rounded-xl tw-bg-indigo-400 tw-py-2.5 tw-text-white tw-font-medium
                    hover:tw-bg-indigo-300 tw-transition"
                         >
-                            Signin
+                            Sign in
                         </button>
 
                         <p className="tw-text-center tw-text-sm tw-text-slate-500">

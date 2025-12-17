@@ -36,9 +36,11 @@ export default function Signup() {
     };
 
     return (<div className="login-signup-form animated fadeInDown">
-            <img src="/src/assets/images/illustration.png" alt="" className="tw-w-1/2"/>
-            <div className="form tw-w-1/2">
-                <form onSubmit={onSubmit} className="tw-font-roboto">
+        <img src="/src/assets/images/illustration.png" alt="" className="tw-w-1/2"/>
+        <div
+            className="tw-w-1/2 tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-bg-gradient-to-br tw-from-slate-100 tw-to-slate-200">
+            <div className="tw-w-full tw-max-w-md tw-bg-white tw-rounded-2xl tw-shadow-xl tw-p-8">
+                <form onSubmit={onSubmit} className="tw-space-y-5 tw-font-roboto">
                     <div className="tw-text-center tw-mb-4">
                         <h1 className="tw-text-4xl tw-text-indigo-400 tw-font-arizonia">
                             Task Manager
@@ -81,14 +83,20 @@ export default function Signup() {
                         required
                     />
 
-                    <button className="tw-w-full tw-rounded-xl tw-bg-indigo-400 tw-py-2.5 tw-text-white tw-font-medium
+                    <button
+                        type="submit"
+                        className="tw-w-full tw-rounded-xl tw-bg-indigo-400 tw-py-2.5 tw-text-white tw-font-medium
                    hover:tw-bg-indigo-300 tw-transition"
-                    >Signup</button>
+                    >
+                        Sign up
+                    </button>
 
-                    <p className="message">
-                        Already registered? <Link to="/login">Sign In</Link>
+                    <p className="tw-text-center tw-text-sm tw-text-slate-500">
+                        Already registered?
+                        <Link to="/login" className="tw-font-medium tw-text-indigo-400 hover:tw-underline">Sign in</Link>
                     </p>
                 </form>
             </div>
-        </div>);
+        </div>
+    </div>);
 }
