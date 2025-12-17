@@ -44,6 +44,7 @@ export default function Login() {
                         </div>
 
                         <input
+                            value="knur@gmail.com"
                             ref={emailRef}
                             type="email"
                             placeholder="Email"
@@ -53,6 +54,7 @@ export default function Login() {
                         />
 
                         <input
+                            value="password"
                             ref={passwordRef}
                             type="password"
                             placeholder="Password"

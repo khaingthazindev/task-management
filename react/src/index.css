@@ -47,22 +47,22 @@ input:focus {
     border-color: #5b08a7;
 }
 
-.btn,
-.btn-add,
-.btn-edit,
-.btn-delete {
-    font-family: "Roboto", sans-serif;
-    outline: 0;
-    background: #5b08a7;
-    border: 0;
-    text-decoration: none;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 16px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-}
+/*.btn,*/
+/*.btn-add,*/
+/*.btn-edit,*/
+/*.btn-delete {*/
+/*    font-family: "Roboto", sans-serif;*/
+/*    outline: 0;*/
+/*    !*background: #5b08a7;*!*/
+/*    border: 0;*/
+/*    text-decoration: none;*/
+/*    padding: 5px 10px;*/
+/*    !*color: #FFFFFF;*!*/
+/*    font-size: 16px;*/
+/*    -webkit-transition: all 0.3 ease;*/
+/*    transition: all 0.3 ease;*/
+/*    cursor: pointer;*/
+/*}*/
 
 .btn-block {
     width: 100%;
@@ -76,9 +76,9 @@ input:focus {
     border-radius: 4px;
 }
 
-.btn-add {
-    background-color: #00a762;
-}
+/*.btn-add {*/
+/*    background-color: #00a762;*/
+/*}*/
 
 .btn-delete {
     background-color: #b72424;
@@ -96,11 +96,11 @@ input:focus {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.btn:hover,
-.btn:active,
-.btn:focus {
-    background: #5b08a7;
-}
+/*.btn:hover,*/
+/*.btn:active,*/
+/*.btn:focus {*/
+/*    background: #5b08a7;*/
+/*}*/
 
 .text-center {
     text-align: center;
