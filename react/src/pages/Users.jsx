@@ -69,7 +69,7 @@ export default function Users() {
             <div className="tw-flex tw-justify-between tw-items-center">
                 <h1 className="tw-text-lg">Users</h1>
                 <Link
-                    to="/users/new"
+                    to="/users/create"
                     className="tw-bg-indigo-400 tw-text-white hover:tw-bg-indigo-300 tw-px-3 tw-py-1 tw-rounded-full tw-shadow-sm"
                 >
                     <i className="fa-solid fa-circle-plus tw-mr-1"></i>
@@ -128,7 +128,6 @@ export default function Users() {
                 </table>
 
                 <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-mt-4">
-                    {/* Prev */}
                     <button
                         disabled={pagination.current_page === 1}
                         onClick={() => getUsers(pagination.current_page - 1)}
@@ -137,10 +136,8 @@ export default function Users() {
                         <i className="fa-solid fa-angle-left"></i>
                     </button>
 
-                    {/* Page Numbers */}
                     {renderPageNumbers()}
 
-                    {/* Next */}
                     <button
                         disabled={pagination.current_page === pagination.last_page}
                         onClick={() => getUsers(pagination.current_page + 1)}

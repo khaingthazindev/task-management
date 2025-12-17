@@ -6,3 +6,9 @@
 
 ## 📸 User List Page Demo
 ![User List Page](demo/userlist.png)
+
+## 📸 User Create Page Demo
+![User Create Page](demo/createuser.png)
+
+## 📸 User Edit Page Demo
+![User Edit Page](demo/edituser.png)
