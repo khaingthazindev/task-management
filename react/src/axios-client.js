@@ -20,10 +20,7 @@ axiosClient.interceptors.request.use((config) => {
 axiosClient.interceptors.response.use(
     (response) => response, // Return response directly
     (error) => {
-        // Only log error here
         console.error("Axios error:", error.response || error);
-
-        // Let the component handle notifications and navigation
         return Promise.reject(error);
     }
 );

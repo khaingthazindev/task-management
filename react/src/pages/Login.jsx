@@ -43,7 +43,6 @@ export default function Login() {
                             </h1>
                         </div>
 
-                        {/* Email */}
                         <input
                             ref={emailRef}
                             type="email"
@@ -53,7 +52,6 @@ export default function Login() {
                             required
                         />
 
-                        {/* Password */}
                         <input
                             ref={passwordRef}
                             type="password"
@@ -63,16 +61,14 @@ export default function Login() {
                             required
                         />
 
-                        {/* Button */}
                         <button
                             type="submit"
                             className="tw-w-full tw-rounded-xl tw-bg-indigo-400 tw-py-2.5 tw-text-white tw-font-medium
                    hover:tw-bg-indigo-300 tw-transition"
                         >
-                            Login
+                            Signin
                         </button>
 
-                        {/* Footer */}
                         <p className="tw-text-center tw-text-sm tw-text-slate-500">
                             Not registered?{" "}
                             <Link
@@ -82,11 +78,9 @@ export default function Login() {
                                 Create an account
                             </Link>
                         </p>
-
                     </form>
                 </div>
             </div>
-
         </div>
     )
 }

@@ -31,4 +31,12 @@ class LoginRequest extends FormRequest
             'remember' => 'boolean'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'The email field is required.',
+            'password.required' => 'The password field is required.'
+        ];
+    }
 }
