@@ -77,55 +77,56 @@ export default function Users() {
                 </Link>
             </div>
 
-            {/* Table */}
             <div className="card animated fadeInDown">
-                <table className="tw-w-full tw-border-collapse">
-                    <thead>
-                    <tr className="tw-border-b">
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Create Date</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {loading && (
-                        <tr>
-                            <td colSpan="5" className="tw-text-center">
-                                Loading...
-                            </td>
+                <div className="tw-w-full tw-overflow-x-scroll ">
+                    <table className="tw-border-collapse">
+                        <thead>
+                        <tr className="tw-border-b">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Create Date</th>
+                            <th>Actions</th>
                         </tr>
-                    )}
+                        </thead>
 
-                    {!loading && users.length === 0 && (
-                        <tr>
-                            <td colSpan="5" className="tw-text-center">
-                                No users found
-                            </td>
-                        </tr>
-                    )}
-
-                    {!loading &&
-                        users.map((u) => (
-                            <tr key={u.id} className="tw-border-b">
-                                <td>{u.id}</td>
-                                <td>{u.name}</td>
-                                <td>{u.email}</td>
-                                <td>{u.created_at}</td>
-                                <td className="tw-space-x-2">
-                                    <Link to={`/users/${u.id}`}>
-                                        <i className="fa-regular fa-pen-to-square tw-text-orange-400"></i>
-                                    </Link>
-                                    <button onClick={() => onDeleteClick(u)}>
-                                        <i className="fa-regular fa-trash-can tw-text-red-400"></i>
-                                    </button>
+                        <tbody>
+                        {loading && (
+                            <tr>
+                                <td colSpan="5" className="tw-text-center">
+                                    Loading...
                                 </td>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        )}
+
+                        {!loading && users.length === 0 && (
+                            <tr>
+                                <td colSpan="5" className="tw-text-center">
+                                    No users found
+                                </td>
+                            </tr>
+                        )}
+
+                        {!loading &&
+                            users.map((u) => (
+                                <tr key={u.id} className="tw-border-b">
+                                    <td>{u.id}</td>
+                                    <td>{u.name}</td>
+                                    <td>{u.email}</td>
+                                    <td>{u.created_at}</td>
+                                    <td className="tw-space-x-2">
+                                        <Link to={`/users/${u.id}`}>
+                                            <i className="fa-regular fa-pen-to-square tw-text-orange-400"></i>
+                                        </Link>
+                                        <button onClick={() => onDeleteClick(u)}>
+                                            <i className="fa-regular fa-trash-can tw-text-red-400"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
                 <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-mt-4">
                     <button

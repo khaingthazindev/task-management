@@ -135,7 +135,7 @@ export default function UserForm() {
 
                             <button
                                 type="submit"
-                                className="tw-rounded-lg tw-bg-indigo-500 tw-w-20 tw-py-2 tw-text-white hover:tw-bg-indigo-400"
+                                className="tw-rounded-lg tw-bg-indigo-400 tw-w-20 tw-py-2 tw-text-white hover:tw-bg-indigo-400"
                             >
                                 Save
                             </button>

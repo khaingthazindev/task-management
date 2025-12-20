@@ -36,9 +36,9 @@ export default function Signup() {
     };
 
     return (<div className="login-signup-form animated fadeInDown">
-        <img src="/src/assets/images/illustration.png" alt="" className="tw-w-1/2"/>
+        <img src="/src/assets/images/illustration.png" alt="" className="tw-w-1/2 tw-hidden md:tw-block"/>
         <div
-            className="tw-w-1/2 tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-bg-gradient-to-br tw-from-slate-100 tw-to-slate-200">
+            className="tw-w-full md:tw-w-1/2 tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-bg-gradient-to-br tw-from-slate-100 tw-to-slate-200">
             <div className="tw-w-full tw-max-w-md tw-bg-white tw-rounded-2xl tw-shadow-xl tw-p-8">
                 <form onSubmit={onSubmit} className="tw-space-y-5 tw-font-roboto">
                     <div className="tw-text-center tw-mb-4">
