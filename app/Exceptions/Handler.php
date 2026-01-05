@@ -49,40 +49,40 @@ class Handler extends ExceptionHandler
 		});
 	}
 
-	public function render($request, Throwable $e)
-	{
-		if ($request->expectsJson()) {
-			// validation error 
-			if ($e instanceof ValidationException) {
-				return response()->json([
-					'success' => false,
-					'message' => 'Validation error',
-					'errors' => $e->errors(),
-				], 422);
-			}
+	// public function render($request, Throwable $e)
+	// {
+	// 	if ($request->expectsJson()) {
+	// 		// validation error 
+	// 		if ($e instanceof ValidationException) {
+	// 			return response()->json([
+	// 				'success' => false,
+	// 				'message' => 'Validation error',
+	// 				'errors' => $e->errors(),
+	// 			], 422);
+	// 		}
 
-			// not found
-			if ($e instanceof ModelNotFoundException) {
-				return response()->json([
-					'success' => false,
-					'message' => 'Resource not found',
-				], 404);
-			}
+	// 		// not found
+	// 		if ($e instanceof ModelNotFoundException) {
+	// 			return response()->json([
+	// 				'success' => false,
+	// 				'message' => 'Resource not found',
+	// 			], 404);
+	// 		}
 
-			// http error 
-			if ($e instanceof HttpException) {
-				return response()->json([
-					'success' => false,
-					'message' => $e->getMessage() ?: 'Request error',
-				], $e->getStatusCode());
-			}
+	// 		// http error 
+	// 		if ($e instanceof HttpException) {
+	// 			return response()->json([
+	// 				'success' => false,
+	// 				'message' => $e->getMessage() ?: 'Request error',
+	// 			], $e->getStatusCode());
+	// 		}
 
-			// default server error 
-			return response()->json([
-				'success' => false,
-				'message' => 'Internal server error'
-			], 500);
-		}
-		return parent::render($request, $e);
-	}
+	// 		// default server error 
+	// 		return response()->json([
+	// 			'success' => false,
+	// 			'message' => 'Internal server error'
+	// 		], 500);
+	// 	}
+	// 	return parent::render($request, $e);
+	// }
 }

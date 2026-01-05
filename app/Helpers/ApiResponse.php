@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Http\Resources\TaskResource;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class ApiResponse
 {
 	public static function success($data = null, $message = 'Success', $status = 200)
@@ -9,7 +12,7 @@ class ApiResponse
 		return response()->json([
 			'success' => true,
 			'message' => $message,
-			'data' => $data,
+			'data'    => $data,
 		], $status);
 	}
 

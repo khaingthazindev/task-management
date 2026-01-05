@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+	Route::post('/logout', [AuthController::class, 'logout']);
+	Route::get('/user', function (Request $request) {
+		return $request->user();
+	});
 
-    Route::apiResource('/users', UserController::class);
+	Route::apiResource('/users', UserController::class);
 
-    Route::apiResource('/tasks', TaskController::class);
+	Route::apiResource('/tasks', TaskController::class);
+	Route::get('/admin/tasks', [TaskController::class, 'getAllTasks']);
+	Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus']);
+	Route::put('/tasks/{task}/priority', [TaskController::class, 'updatePriority']);
+	Route::put('/tasks/{task}/due-date', [TaskController::class, 'updateDueDate']);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);

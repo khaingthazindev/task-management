@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -12,9 +13,12 @@ class UserController extends Controller
 {
 	public function index()
 	{
-		return UserResource::collection(
-			User::query()->orderBy('id', 'desc')->paginate(10)
-		);
+		// I can't use response()->json() it can lost LengthAwarePaginator 
+		$filtered_data = User::query()->orderBy('id', 'desc')->paginate(perPage: config('app.pagination'));
+		return UserResource::collection($filtered_data)->additional([
+			'success' => true,
+			'message' => 'Success',
+		]);
 	}
 
 	public function store(StoreUserRequest $request)

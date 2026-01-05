@@ -1,12 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axiosClient from "../axios-client";
-import {toast} from "react-toastify";
+import axiosClient from "@/axios-client";
+import { toast } from "react-toastify";
 
 export default function UserForm() {
     const navigate = useNavigate();
     const { id } = useParams();
-
 
     const [user, setUser] = useState({
         id: null,
@@ -25,8 +24,8 @@ export default function UserForm() {
         axiosClient
             .get(`/users/${id}`)
             .then(({ data }) => {
-                console.log('data', `/users/${id}`);
-                setUser(data)
+                console.log("data", `/users/${id}`);
+                setUser(data);
             })
             .finally(() => setLoading(false));
     }, [id]);
@@ -63,7 +62,9 @@ export default function UserForm() {
 
             <div className="tw-bg-white tw-rounded-2xl tw-shadow-sm tw-p-6">
                 {loading && (
-                    <div className="tw-text-center tw-text-gray-500">Loading...</div>
+                    <div className="tw-text-center tw-text-gray-500">
+                        Loading...
+                    </div>
                 )}
 
                 {!loading && (
