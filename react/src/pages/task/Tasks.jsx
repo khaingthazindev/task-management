@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosClient from "@/axios-client";
 import { Link } from "react-router-dom";
+import CollapsibleTable from "../../components/UI/material/CollapsibleTable";
 
 export default function Tasks() {
     const [tasks, setTasks] = useState([]);
@@ -32,11 +33,11 @@ export default function Tasks() {
             });
     };
 
-    const onDeleteClick = (user) => {
+    const onDeleteClick = (id) => {
         if (!window.confirm("Are you sure you want to delete this user?"))
             return;
 
-        axiosClient.delete(`/tasks/${user.id}`).then(() => {
+        axiosClient.delete(`/tasks/${id}`).then(() => {
             getTasks(pagination.current_page);
         });
     };
@@ -68,7 +69,7 @@ export default function Tasks() {
     return (
         <div>
             <div className="tw-flex tw-justify-between tw-items-center">
-                <h1 className="tw-text-lg">tasks</h1>
+                <h1 className="tw-text-lg">Tasks</h1>
                 <Link
                     to="/tasks/create"
                     className="tw-bg-indigo-400 tw-text-white hover:tw-bg-indigo-300 tw-px-3 tw-py-1 tw-rounded-full tw-shadow-sm"
@@ -78,89 +79,14 @@ export default function Tasks() {
                 </Link>
             </div>
 
-            <div className="card animated fadeInDown">
-                <div className="tw-w-full">
-                    <table className="tw-border-collapse">
-                        <thead>
-                            <tr className="tw-border-b">
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Status</th>
-                                <th>Priority</th>
-                                <th>Due Date</th>
-                                <th>Create Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {loading && (
-                                <tr>
-                                    <td colSpan="7" className="tw-text-center">
-                                        <img
-                                            src="/src/assets/images/loading.gif"
-                                            alt=""
-                                            className="tw-inline-block tw-w-7"
-                                        />
-                                    </td>
-                                </tr>
-                            )}
-
-                            {!loading && tasks.length === 0 && (
-                                <tr>
-                                    <td colSpan="5" className="tw-text-center">
-                                        No tasks found
-                                    </td>
-                                </tr>
-                            )}
-
-                            {!loading &&
-                                tasks.map((u) => (
-                                    <tr key={u.id} className="tw-border-b">
-                                        <td>{u.id}</td>
-                                        <td>{u.title}</td>
-                                        <td>{u.status}</td>
-                                        <td>{u.priority}</td>
-                                        <td>{u.due_date ?? "-"}</td>
-                                        <td>{u.created_at}</td>
-                                        <td className="tw-space-x-2">
-                                            <Link to={`/tasks/${u.id}`}>
-                                                <i className="fa-regular fa-pen-to-square tw-text-orange-400"></i>
-                                            </Link>
-                                            <button
-                                                onClick={() => onDeleteClick(u)}
-                                            >
-                                                <i className="fa-regular fa-trash-can tw-text-red-400"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-mt-4">
-                    <button
-                        disabled={pagination.current_page === 1}
-                        onClick={() => getTasks(pagination.current_page - 1)}
-                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
-                    >
-                        <i className="fa-solid fa-angle-left"></i>
-                    </button>
-
-                    {renderPageNumbers()}
-
-                    <button
-                        disabled={
-                            pagination.current_page === pagination.last_page
-                        }
-                        onClick={() => getTasks(pagination.current_page + 1)}
-                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
-                    >
-                        <i className="fa-solid fa-angle-right"></i>
-                    </button>
-                </div>
-            </div>
+            <CollapsibleTable
+                tasks={tasks}
+                onDeleteClick={onDeleteClick}
+                loading={loading}
+                pagination={pagination}
+                renderPageNumbers={renderPageNumbers}
+                getTasks={getTasks}
+            />
         </div>
     );
 }
