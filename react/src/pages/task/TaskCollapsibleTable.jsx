@@ -37,9 +37,31 @@ function Row({ row, onDeleteClick }) {
                 <TableCell component="th" scope="row">
                     {row.title}
                 </TableCell>
-                <TableCell>{row.status}</TableCell>
-                <TableCell>{row.priority}</TableCell>
-                <TableCell>{row.due_date}</TableCell>
+                <TableCell>
+                    <small
+                        className={`${row.status === "to-do" ? "tw-bg-red-500" : row.status === "in-progress" ? "tw-bg-blue-500" : "tw-bg-green-500"} tw-text-white tw-px-2 tw-py-1 tw-rounded-full`}
+                    >
+                        {row.status}
+                    </small>
+                </TableCell>
+                <TableCell>
+                    <small
+                        className={`${row.priority === "low" ? "tw-bg-yellow-500" : row.priority === "medium" ? "tw-bg-orange-500" : "tw-bg-red-500"} tw-text-white tw-px-2 tw-py-1 tw-rounded-full`}
+                    >
+                        {row.priority}
+                    </small>
+                </TableCell>
+                <TableCell>
+                    <span
+                        className={
+                            new Date(row.due_date) < new Date()
+                                ? "tw-text-red-500"
+                                : ""
+                        }
+                    >
+                        {row.due_date}
+                    </span>
+                </TableCell>
                 <TableCell>
                     <Link to={`/tasks/${row.id}`}>
                         <i className="fa-regular fa-pen-to-square tw-text-orange-400 tw-mr-2"></i>
@@ -58,7 +80,7 @@ function Row({ row, onDeleteClick }) {
                         <Box sx={{ margin: 1 }}>
                             <Table size="small" aria-label="purchases">
                                 <TableBody>
-                                    <TableRow key={row.id}>
+                                    <TableRow>
                                         <TableCell
                                             className="tw-bg-indigo-100"
                                             style={{
@@ -72,26 +94,50 @@ function Row({ row, onDeleteClick }) {
                                             {row.description}
                                         </TableCell>
                                     </TableRow>
-                                    <TableRow key={row.id}>
-                                        <TableCell className="tw-bg-indigo-100">
+                                    <TableRow>
+                                        <TableCell
+                                            className="tw-bg-indigo-100"
+                                            style={{
+                                                paddingTop: "10px",
+                                                paddingBottom: "10px",
+                                            }}
+                                        >
                                             Created By
                                         </TableCell>
                                         <TableCell>{row.created_by}</TableCell>
                                     </TableRow>
-                                    <TableRow key={row.id}>
-                                        <TableCell className="tw-bg-indigo-100">
+                                    <TableRow>
+                                        <TableCell
+                                            className="tw-bg-indigo-100"
+                                            style={{
+                                                paddingTop: "10px",
+                                                paddingBottom: "10px",
+                                            }}
+                                        >
                                             Created At
                                         </TableCell>
                                         <TableCell>{row.created_at}</TableCell>
                                     </TableRow>
-                                    <TableRow key={row.id}>
-                                        <TableCell className="tw-bg-indigo-100">
+                                    <TableRow>
+                                        <TableCell
+                                            className="tw-bg-indigo-100"
+                                            style={{
+                                                paddingTop: "10px",
+                                                paddingBottom: "10px",
+                                            }}
+                                        >
                                             Updated By
                                         </TableCell>
                                         <TableCell>{row.updated_by}</TableCell>
                                     </TableRow>
-                                    <TableRow key={row.id}>
-                                        <TableCell className="tw-bg-indigo-100">
+                                    <TableRow>
+                                        <TableCell
+                                            className="tw-bg-indigo-100"
+                                            style={{
+                                                paddingTop: "10px",
+                                                paddingBottom: "10px",
+                                            }}
+                                        >
                                             Updated At
                                         </TableCell>
                                         <TableCell>{row.updated_at}</TableCell>
@@ -113,11 +159,11 @@ Row.propTypes = {
         description: PropTypes.string,
         status: PropTypes.string.isRequired,
         priority: PropTypes.string.isRequired,
-        due_date: PropTypes.date,
-        created_by: PropTypes.number,
-        created_at: PropTypes.date,
-        updated_by: PropTypes.number,
-        updated_at: PropTypes.date,
+        due_date: PropTypes.string,
+        created_by: PropTypes.string,
+        created_at: PropTypes.string,
+        updated_by: PropTypes.string,
+        updated_at: PropTypes.string,
     }).isRequired,
     onDeleteClick: PropTypes.func.isRequired,
 };
@@ -146,7 +192,7 @@ export default function CollapsibleTable({
                 {loading && (
                     <TableBody>
                         <TableRow>
-                            <TableCell colSpan={6}>
+                            <TableCell colSpan={6} align="center">
                                 <img
                                     src="/src/assets/images/loading.gif"
                                     alt=""
@@ -168,25 +214,29 @@ export default function CollapsibleTable({
                     </TableBody>
                 )}
             </Table>
-            <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-my-4 tw-mr-4">
-                <button
-                    disabled={pagination.current_page === 1}
-                    onClick={() => getTasks(pagination.current_page - 1)}
-                    className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
-                >
-                    <i className="fa-solid fa-angle-left"></i>
-                </button>
+            {!loading && (
+                <div className="tw-flex tw-justify-end tw-items-center tw-gap-1 tw-my-4 tw-mr-4">
+                    <button
+                        disabled={pagination.current_page === 1}
+                        onClick={() => getTasks(pagination.current_page - 1)}
+                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
+                    >
+                        <i className="fa-solid fa-angle-left"></i>
+                    </button>
 
-                {renderPageNumbers()}
+                    {renderPageNumbers()}
 
-                <button
-                    disabled={pagination.current_page === pagination.last_page}
-                    onClick={() => getTasks(pagination.current_page + 1)}
-                    className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
-                >
-                    <i className="fa-solid fa-angle-right"></i>
-                </button>
-            </div>
+                    <button
+                        disabled={
+                            pagination.current_page === pagination.last_page
+                        }
+                        onClick={() => getTasks(pagination.current_page + 1)}
+                        className="tw-px-3 tw-py-1 tw-border tw-rounded disabled:tw-opacity-50"
+                    >
+                        <i className="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+            )}
         </TableContainer>
     );
 }

@@ -19,24 +19,29 @@ class TaskController extends Controller
 	public function index(Request $request)
 	{
 		$query = Task::query();
-		$query = $query->where('created_by', $request->user()->id);
-		if ($request->has('title')) {
-			$query->where('title', 'like', '%' . $request->title . '%');
-		}
-		if ($request->has('status')) {
-			$query->where('status', $request->status);
-		}
-		if ($request->has('priority')) {
-			$query->where('priority', $request->priority);
-		}
-		if ($request->has('due_date')) {
-			$query->whereDate('due_date', $request->due_date);
-		}
-		if ($request->has('order_by_id')) {
-			if ($request->order_by_id === -1) {
-				$query->orderBy('id', 'desc');
-			}
-		}
+		$query = $query->where('created_by', $request->user()->id)
+			->when($request->filled('search'), function ($q) use ($request) {
+				$q->where(function ($q2) use ($request) {
+					$q2->where('title', 'like', "%{$request->search}%")
+						->orWhere('description', 'like', "%{$request->search}%");
+				});
+			})
+			->when($request->filled('status'), function ($q) use ($request) {
+				$status = explode(',', $request->status);
+				$q->whereIn('status', $status);
+			})
+			->when($request->filled('priority'), function ($q) use ($request) {
+				$priority = explode(',', $request->priority);
+				$q->whereIn('priority', $priority);
+			})
+			->when($request->filled('due_date'), function ($q) use ($request) {
+				$q->whereDate('due_date', $request->due_date);
+			})
+			->when($request->filled('order_by_id'), function ($q) use ($request) {
+				if ($request->order_by_id === "-1") {
+					$q->orderBy('id', 'desc');
+				}
+			});
 		return TaskResource::collection($query->paginate(config('app.pagination')))->additional([
 			'success' => true,
 			'message' => 'Success',
@@ -74,6 +79,7 @@ class TaskController extends Controller
 	{
 		try {
 			$data = $request->validated();
+			$data = $request->all();
 			$task = Task::create([
 				...$data,
 				'created_by' => auth()->user()->id

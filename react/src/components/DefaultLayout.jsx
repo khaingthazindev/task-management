@@ -12,7 +12,7 @@ export default function DefaultLayout() {
             .get("/user")
             .then(({ data }) => setUser(data))
             .catch((error) =>
-                console.error("Failed to fetch user data:", error)
+                console.error("Failed to fetch user data:", error),
             );
     }, [setUser]);
 
@@ -58,7 +58,7 @@ export default function DefaultLayout() {
                     sidebarOpen ? "tw-w-64" : "tw-w-25"
                 }`}
             >
-                <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
+                <div className="tw-flex tw-items-center tw-justify-between">
                     <div className="tw-flex tw-items-center">
                         {!sidebarOpen && (
                             <img

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axiosClient from "@/axios-client";
 import { toast } from "react-toastify";
 import CustomDatePicker from "@/components/UI/CustomDatePicker";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 export default function TaskForm() {
     const navigate = useNavigate();
@@ -152,40 +154,31 @@ export default function TaskForm() {
                             <label className="tw-block tw-text-sm tw-font-medium tw-mb-1">
                                 Status
                             </label>
-                            <div className="tw-flex tw-gap-4">
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="status"
-                                        value="to-do"
-                                        onChange={handleChange}
-                                        checked={task.status === "to-do"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    To-do
-                                </label>
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="status"
-                                        value="in-progress"
-                                        onChange={handleChange}
-                                        checked={task.status === "in-progress"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    In-progress
-                                </label>
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="status"
-                                        value="done"
-                                        onChange={handleChange}
-                                        checked={task.status === "done"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    Done
-                                </label>
+                            <div className="tw-flex">
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="To-do"
+                                    name="status"
+                                    value="to-do"
+                                    onChange={handleChange}
+                                    checked={task.status === "to-do"}
+                                />
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="In-progress"
+                                    name="status"
+                                    value="in-progress"
+                                    onChange={handleChange}
+                                    checked={task.status === "in-progress"}
+                                />
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="Done"
+                                    name="status"
+                                    value="done"
+                                    onChange={handleChange}
+                                    checked={task.status === "done"}
+                                />
                             </div>
                         </div>
 
@@ -203,40 +196,31 @@ export default function TaskForm() {
                             <label className="tw-block tw-text-sm tw-font-medium tw-mb-1">
                                 Priority
                             </label>
-                            <div className="tw-flex tw-gap-4">
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="low"
-                                        onChange={handleChange}
-                                        checked={task.priority === "low"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    Low
-                                </label>
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="medium"
-                                        onChange={handleChange}
-                                        checked={task.priority === "medium"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    Medium
-                                </label>
-                                <label className="tw-flex tw-items-center tw-gap-2 tw-cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="high"
-                                        onChange={handleChange}
-                                        checked={task.priority === "high"}
-                                        className="tw-w-4 tw-mt-3 tw-text-blue-600 focus:right-blue-500"
-                                    />
-                                    High
-                                </label>
+                            <div className="tw-flex">
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="Low"
+                                    name="priority"
+                                    value="low"
+                                    onChange={handleChange}
+                                    checked={task.priority === "low"}
+                                />
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="Medium"
+                                    name="priority"
+                                    value="medium"
+                                    onChange={handleChange}
+                                    checked={task.priority === "medium"}
+                                />
+                                <FormControlLabel
+                                    control={<Radio />}
+                                    label="High"
+                                    name="priority"
+                                    value="high"
+                                    onChange={handleChange}
+                                    checked={task.priority === "high"}
+                                />
                             </div>
                         </div>
 
