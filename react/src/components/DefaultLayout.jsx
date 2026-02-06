@@ -6,11 +6,21 @@ import axiosClient from "../axios-client.js";
 export default function DefaultLayout() {
     const { user, token, setUser, setToken } = useStateContext();
     const [sidebarOpen, setSidebarOpen] = useState(true); // Sidebar toggle
+    const [viewUserMenu, setViewUserMenu] = useState(false);
 
     useEffect(() => {
         axiosClient
             .get("/user")
             .then(({ data }) => setUser(data))
+            .catch((error) =>
+                console.error("Failed to fetch user data:", error),
+            );
+
+        axiosClient
+            .get("/check-sidebar-permissions")
+            .then(({ data }) => {
+                setViewUserMenu(data.userMenu);
+            })
             .catch((error) =>
                 console.error("Failed to fetch user data:", error),
             );
@@ -95,18 +105,35 @@ export default function DefaultLayout() {
                             <span className="tw-text-xl">🏠</span>
                         )}
                     </Link>
+
+                    {viewUserMenu && (
+                        <Link
+                            to="/users"
+                            className={`tw-py-2 tw-px-4 tw-rounded hover:tw-bg-indigo-100 tw-transition menu-item ${
+                                isActive("/users") ? "active" : ""
+                            }`}
+                        >
+                            {sidebarOpen ? (
+                                "Users"
+                            ) : (
+                                <span className="tw-text-xl">👥</span>
+                            )}
+                        </Link>
+                    )}
+
                     <Link
-                        to="/users"
+                        to="/projects"
                         className={`tw-py-2 tw-px-4 tw-rounded hover:tw-bg-indigo-100 tw-transition menu-item ${
-                            isActive("/users") ? "active" : ""
+                            isActive("/projects") ? "active" : ""
                         }`}
                     >
                         {sidebarOpen ? (
-                            "Users"
+                            "Projects"
                         ) : (
-                            <span className="tw-text-xl">👥</span>
+                            <span className="tw-text-xl">🎯</span>
                         )}
                     </Link>
+
                     <Link
                         to="/tasks"
                         className={`tw-py-2 tw-px-4 tw-rounded hover:tw-bg-indigo-100 tw-transition menu-item ${

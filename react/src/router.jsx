@@ -8,9 +8,16 @@ import Dashboard from "@/pages/Dashboard";
 import Users from "@/pages/user/Users.jsx";
 import UserForm from "@/pages/user/UserForm.jsx";
 import Tasks from "@/pages/task/Tasks.jsx";
-import TaskForm from "./pages/task/TaskForm";
+import TaskForm from "@/pages/task/TaskForm";
+import Projects from "@/pages/project/Projects";
+import ProjectForm from "@/pages/project/ProjectForm";
 
 const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <DefaultLayout />,
+        children: [{ path: "/dashboard", element: <Dashboard /> }],
+    },
     {
         path: "/",
         element: <DefaultLayout />,
@@ -18,7 +25,15 @@ const router = createBrowserRouter([
             { path: "/users", element: <Users /> },
             { path: "/users/create", element: <UserForm /> },
             { path: "/users/:id", element: <UserForm /> },
-            { path: "/dashboard", element: <Dashboard /> },
+        ],
+    },
+    {
+        path: "/",
+        element: <DefaultLayout />,
+        children: [
+            { path: "/projects", element: <Projects /> },
+            { path: "/projects/create", element: <ProjectForm /> },
+            { path: "/projects/:id", element: <ProjectForm /> },
         ],
     },
     {
@@ -28,7 +43,6 @@ const router = createBrowserRouter([
             { path: "/tasks", element: <Tasks /> },
             { path: "/tasks/create", element: <TaskForm /> },
             { path: "/tasks/:id", element: <TaskForm /> },
-            // { path: "/dashboard", element: <Dashboard /> },
         ],
     },
     {

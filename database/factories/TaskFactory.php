@@ -16,6 +16,7 @@ class TaskFactory extends Factory
         $priorities = ['low', 'medium', 'high'];
 
         return [
+            'project_id' => $this->faker->numberBetween(1, 10),
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph,
             'status' => $this->faker->randomElement($statuses),

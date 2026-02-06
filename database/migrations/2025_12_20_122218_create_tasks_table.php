@@ -10,6 +10,7 @@ return new class extends Migration
 	{
 		Schema::create('tasks', function (Blueprint $table) {
 			$table->id();
+			$table->integer('project_id');
 			$table->string('title');
 			$table->text('description')->nullable();
 			$table->enum('status', ['to-do', 'in-progress', 'done'])->default('to-do');
